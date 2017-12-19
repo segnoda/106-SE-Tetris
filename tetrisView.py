@@ -12,7 +12,7 @@ class tetrisView(QMainWindow, Ui_MainWindow):
         super(tetrisView, self).__init__(parent)
         self.setupUi(self)
         self.game = tetrisGame(self)
-        self.game.setGeometry(119, 9, 251, 521)
+        self.game.setGeometry(self.frame.geometry())
         self.scores.setText('0')
         self.lines.setText('0')
         self.show()
