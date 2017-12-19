@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import QPainter, QColor 
 import sys, random
-#from tetrisView import tetrisView
+from tetrisView import *
 
 class PiecesShape(object):
      NoShape = 0
