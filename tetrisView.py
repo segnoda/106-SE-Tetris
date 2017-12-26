@@ -70,10 +70,20 @@ class tetrisGame(QFrame):
         self.setWindowTitle('Tetris')
         self.clearBoard()
 
-    def clearBoard(self):
 
-        for i in range(tetrisGame.BoardWidth*tetrisGame.BoardHeight):
-            self.board.append(PiecesShape.NoShape)
+    def clearBoard(self):
+        if len(self.board) > 0:
+            print(len(self.board))
+            for a in range(tetrisGame.BoardHeight):
+               for b in range(tetrisGame.BoardWidth):
+                   self.setShapeAt(b, a, PiecesShape.NoShape)
+            #for i in range(tetrisGame.BoardWidth * tetrisGame.BoardHeight):
+             #   self.board[i] = 0
+        else:
+            for i in range(tetrisGame.BoardWidth * tetrisGame.BoardHeight):
+                self.board.append(PiecesShape.NoShape)
+
+
 
     def start(self):
 
@@ -113,7 +123,6 @@ class tetrisGame(QFrame):
             super(tetrisGame, self).timerEvent(event)
 
     def newPiece(self):
-
         self.currentPiece.setRandomShape()
         self.curX = tetrisGame.BoardWidth // 2 + 1
         self.curY = tetrisGame.BoardHeight - 1 + self.currentPiece.minY()
