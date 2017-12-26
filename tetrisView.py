@@ -72,13 +72,12 @@ class tetrisGame(QFrame):
 
 
     def clearBoard(self):
-        if len(self.board) > 0:
+        if len(self.board)>220:
             print(len(self.board))
             for a in range(tetrisGame.BoardHeight):
                for b in range(tetrisGame.BoardWidth):
                    self.setShapeAt(b, a, PiecesShape.NoShape)
-            #for i in range(tetrisGame.BoardWidth * tetrisGame.BoardHeight):
-             #   self.board[i] = 0
+
         else:
             for i in range(tetrisGame.BoardWidth * tetrisGame.BoardHeight):
                 self.board.append(PiecesShape.NoShape)
@@ -94,6 +93,7 @@ class tetrisGame(QFrame):
         self.parent().lines.setText('0')
         self.parent().statusBar.showMessage('Game start!')
         self.clearBoard()
+        print('12')
         self.newPiece()
         self.timer.start(tetrisGame.Speed, self)
 
@@ -127,6 +127,7 @@ class tetrisGame(QFrame):
         self.curX = tetrisGame.BoardWidth // 2 + 1
         self.curY = tetrisGame.BoardHeight - 1 + self.currentPiece.minY()
         if not self.Move(self.currentPiece, self.curX, self.curY):
+            print('12')
             self.currentPiece.setShape(PiecesShape.NoShape)
             self.timer.stop()
 
@@ -195,6 +196,7 @@ class tetrisGame(QFrame):
 
         for i in range(4):
             x = newX + newPiece.x(i)
+
             y = newY - newPiece.y(i)
             if x < 0 or x >= tetrisGame.BoardWidth or y < 0 or y >= tetrisGame.BoardHeight + 4:
                 return False
@@ -203,8 +205,15 @@ class tetrisGame(QFrame):
         self.currentPiece = newPiece
         self.curX = newX
         self.curY = newY
+
         self.update()
         return True
+
+    def checkfullboard(selfs):
+       # for i in range(tetrisGame.BoardWidth):
+        return 0
+
+
 
     def squareWidth(self):
 
