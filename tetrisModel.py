@@ -18,6 +18,8 @@ class PiecesShape(object):
 
 class tetrisModel(object):
 
+    PieceList = random.sample(range(1, 8), 7)
+    Count = 0
     IDLE_STATE="IDLE"
     PiecesCoordsTable = (
              ((0, 0),     (0, 0),     (0, 0),     (0, 0)),
@@ -60,7 +62,12 @@ class tetrisModel(object):
 
     def setRandomShape(self):
 
-        self.setShape(random.randint(1, 7))
+        #self.setShape(random.randint(1, 7))
+        self.setShape(tetrisModel.PieceList[tetrisModel.Count])
+        tetrisModel.Count += 1
+        if tetrisModel.Count == 7 :
+            tetrisModel.PieceList = random.sample(range(1, 8), 7)
+            tetrisModel.Count = 0
 
     def x(self, index):
 
