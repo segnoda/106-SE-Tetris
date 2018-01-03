@@ -15,7 +15,6 @@ class tetrisController(QMainWindow):
     def initUI(self):
 
         self.window=tetrisView(self)
-        self.currentState=self.window.game.model.getState()
         self.window.startButton.clicked.connect(self.buttonClicked)
         self.window.pauseButton.clicked.connect(self.buttonClicked)
         self.window.exitButton.clicked.connect(self.buttonClicked)
@@ -31,14 +30,15 @@ class tetrisController(QMainWindow):
             self.exit()
 
     def start(self):
-
+        self.currentState = self.window.game.model.getState()
         if self.currentState=='START':
             return
+        print('fuck')
         self.currentState='START'
         self.window.game.start()
 
     def pause(self):
-
+        self.currentState = self.window.game.model.getState()
         if self.currentState!='START':
             return
         self.currentState='PAUSE'
@@ -52,7 +52,7 @@ class tetrisController(QMainWindow):
 
         if sender.text()=='START':
             self.start()
-        elif sender.teext()=='PAUSE':
+        elif sender.text()=='PAUSE':
             self.pause()
 
 if __name__ == '__main__':

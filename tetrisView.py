@@ -18,8 +18,7 @@ class tetrisView(QMainWindow, Ui_MainWindow):
         self.show()
 
     def keyPressEvent(self, event):
-
-        if self.game.model.getState()!='START':
+        if self.game.model.getState() != 'START':
             return
         key = event.key()
 
@@ -69,13 +68,15 @@ class tetrisGame(QFrame):
         self.resize(380, 600)
         self.setWindowTitle('Tetris')
         self.clearBoard()
+        self.clearBoard()
+        self.gameover = False
 
 
     def clearBoard(self):
         if len(self.board)>220:
             print(len(self.board))
-            for a in range(tetrisGame.BoardHeight):
-               for b in range(tetrisGame.BoardWidth):
+            for a in range(44):
+               for b in range(10):
                    self.setShapeAt(b, a, PiecesShape.NoShape)
 
         else:
@@ -92,8 +93,9 @@ class tetrisGame(QFrame):
         self.parent().scores.setText('0')
         self.parent().lines.setText('0')
         self.parent().statusBar.showMessage('Game start!')
-        self.clearBoard()
-        print('12')
+        if  self.gameover == True:
+            self.clearBoard()
+            self.gameover = False
         self.newPiece()
         self.timer.start(tetrisGame.Speed, self)
 
@@ -107,12 +109,10 @@ class tetrisGame(QFrame):
         self.update()
 
     def exit(self):
-
         self.parent().statusBar.showMessage('Bye!')
         self.parent().close()
 
     def timerEvent(self, event):
-
         if event.timerId() == self.timer.timerId():
             if self.waiting:
                 self.waiting = False
@@ -209,9 +209,13 @@ class tetrisGame(QFrame):
         self.update()
         return True
 
-    def checkfullboard(selfs):
-       # for i in range(tetrisGame.BoardWidth):
-        return 0
+    def checkfullboard(self):
+        check = 0
+        for i in range(tetrisGame.BoardWidth):
+            check += self.shapeAt(i, 20)
+        print(check)
+        if  check!=0:
+            self.gameover = True
 
 
 
@@ -224,13 +228,19 @@ class tetrisGame(QFrame):
         return self.contentsRect().height() // tetrisGame.BoardHeight
 
     def paintEvent(self, event):
-
+        self.checkfullboard()
+        print(self.gameover)
+        if self.gameover == True:
+            self.model.setState('PAUSE')
+            self.parent().pauseButton.setEnabled(False)
+            self.parent().startButton.setEnabled(True)
+            self.parent().statusBar.showMessage('')
+            self.parent().statusBar.showMessage('Game Over')
+            self.timer.stop()
         painter = QPainter(self)
         print(painter.device())
         rect = self.contentsRect()
-
         boardTop = rect.bottom() - tetrisGame.BoardHeight * self.squareHeight()
-
         for i in range(tetrisGame.BoardHeight):
             for j in range(tetrisGame.BoardWidth):
 
