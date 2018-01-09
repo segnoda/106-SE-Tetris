@@ -7,8 +7,9 @@ from pyqtwindow import *
 import sys, random
 
 class tetrisView(QMainWindow, Ui_MainWindow):
-
+    over = False
     def __init__(self, parent):
+        line = 0
         super(tetrisView, self).__init__(parent)
         self.setupUi(self)
         self.game = tetrisGame(self)
@@ -19,6 +20,8 @@ class tetrisView(QMainWindow, Ui_MainWindow):
 
     def keyPressEvent(self, event):
         if self.game.model.getState() != 'START':
+            return
+        if tetrisView.over == True:
             return
         key = event.key()
 
@@ -54,7 +57,8 @@ class tetrisGame(QFrame):
         self.initBoard()
 
     def initBoard(self):
-
+        self.line = 0
+        self.score = 0
         self.timer = QBasicTimer()
         self.model = tetrisModel()
         self.currentPiece = tetrisModel()
@@ -70,6 +74,8 @@ class tetrisGame(QFrame):
         self.clearBoard()
         self.clearBoard()
         self.gameover = False
+        self.parent().startButton.setEnabled(True)
+        self.parent().pauseButton.setEnabled(False)
 
 
     def clearBoard(self):
@@ -86,18 +92,21 @@ class tetrisGame(QFrame):
 
 
     def start(self):
-
-        self.model.setState('START')
         self.parent().startButton.setEnabled(False)
         self.parent().pauseButton.setEnabled(True)
-        self.parent().scores.setText('0')
-        self.parent().lines.setText('0')
         self.parent().statusBar.showMessage('Game start!')
         if  self.gameover == True:
             self.clearBoard()
             self.gameover = False
-        self.newPiece()
+            tetrisView.over = False
+        if self.model.getState() !='PAUSE':
+            self.line = 0
+            self.score = 0
+            self.newPiece()
+            self.parent().scores.setText('0')
+            self.parent().lines.setText('0')
         self.timer.start(tetrisGame.Speed, self)
+        self.model.setState('START')
 
     def pause(self):
 
@@ -127,7 +136,6 @@ class tetrisGame(QFrame):
         self.curX = tetrisGame.BoardWidth // 2 + 1
         self.curY = tetrisGame.BoardHeight - 1 + self.currentPiece.minY()
         if not self.Move(self.currentPiece, self.curX, self.curY):
-            print('12')
             self.currentPiece.setShape(PiecesShape.NoShape)
             self.timer.stop()
 
@@ -176,6 +184,11 @@ class tetrisGame(QFrame):
                     n = n + 1
             if n == 10:
                 rowsToRemove.append(i)
+                self.line += 1
+                self.parent().lines.setText(str(self.line))
+                self.score += 5
+                self.parent().scores.setText(str(self.score))
+
 
         rowsToRemove.reverse()
 
@@ -213,9 +226,15 @@ class tetrisGame(QFrame):
         check = 0
         for i in range(tetrisGame.BoardWidth):
             check += self.shapeAt(i, 20)
-        print(check)
         if  check!=0:
             self.gameover = True
+            tetrisView.over = True
+            self.parent().startButton.setEnabled(True)
+            self.parent().pauseButton.setEnabled(False)
+            self.model.setState('GAMEOVER')
+            self.parent().statusBar.clearMessage()
+            self.parent().statusBar.showMessage('Game Over')
+            self.parent().statusBar.showMessage('Game Over')
 
 
 
@@ -229,14 +248,6 @@ class tetrisGame(QFrame):
 
     def paintEvent(self, event):
         self.checkfullboard()
-        print(self.gameover)
-        if self.gameover == True:
-            self.model.setState('PAUSE')
-            self.parent().pauseButton.setEnabled(False)
-            self.parent().startButton.setEnabled(True)
-            self.parent().statusBar.showMessage('')
-            self.parent().statusBar.showMessage('Game Over')
-            self.timer.stop()
         painter = QPainter(self)
         print(painter.device())
         rect = self.contentsRect()
@@ -247,7 +258,7 @@ class tetrisGame(QFrame):
                 shape = self.shapeAt(j, tetrisGame.BoardHeight - i - 1)
 
                 if shape != PiecesShape.NoShape:
-                    self.drawSquare(painter,rect.left() + j * self.squareWidth(),
+                    self.drawSquare(painter, rect.left() + j * self.squareWidth(),
                                     boardTop + i * self.squareHeight(), shape)
         if (self.currentPiece.getShape() != PiecesShape.NoShape):
 
@@ -255,8 +266,8 @@ class tetrisGame(QFrame):
                 x = self.curX + self.currentPiece.x(i)
                 y = self.curY - self.currentPiece.y(i)
                 self.drawSquare(painter, rect.left() + x * self.squareWidth(),
-                    boardTop + (tetrisGame.BoardHeight - y - 1) * self.squareHeight(),
-                    self.currentPiece.getShape())
+                                boardTop + (tetrisGame.BoardHeight - y - 1) * self.squareHeight(),
+                                self.currentPiece.getShape())
 
     def drawSquare(self, painter, x, y, shape):
 

@@ -33,7 +33,6 @@ class tetrisController(QMainWindow):
         self.currentState = self.window.game.model.getState()
         if self.currentState=='START':
             return
-        print('fuck')
         self.currentState='START'
         self.window.game.start()
 
@@ -45,11 +44,10 @@ class tetrisController(QMainWindow):
         self.window.game.pause()
 
     def exit(self):
-
         self.window.game.exit()
 
     def getUserInput(self, sender):
-
+        print('fuck')
         if sender.text()=='START':
             self.start()
         elif sender.text()=='PAUSE':
