@@ -2,7 +2,12 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from tetrisModel import *
-from pyqtwindow import *
+#from pyqtwindow import *
+#from B10415009 import *
+#from B10415013 import *
+#from B10415015 import *
+#from B10415051 import *
+from B10431031 import *
 
 import sys, random
 
