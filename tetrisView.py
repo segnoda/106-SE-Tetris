@@ -248,7 +248,7 @@ class tetrisGame(QFrame):
     def paintEvent(self, event):
         self.checkfullboard()
         painter = QPainter(self)
-        print(painter.device())
+        
         rect = self.contentsRect()
         boardTop = rect.bottom() - tetrisGame.BoardHeight * self.squareHeight()
         for i in range(tetrisGame.BoardHeight):
