@@ -234,7 +234,6 @@ class tetrisGame(QFrame):
             self.model.setState('GAMEOVER')
             self.parent().statusBar.clearMessage()
             self.parent().statusBar.showMessage('Game Over')
-            self.parent().statusBar.showMessage('Game Over')
 
 
 
