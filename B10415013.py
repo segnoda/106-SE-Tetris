@@ -7,6 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -19,13 +20,16 @@ class Ui_MainWindow(object):
         self.startButton.setAutoDefault(False)
         self.startButton.setDefault(False)
         self.startButton.setFlat(False)
+        self.startButton.setFocusPolicy(Qt.ClickFocus)
         self.startButton.setObjectName("startButton")
         self.pauseButton = QtWidgets.QPushButton(self.centralWidget)
         self.pauseButton.setGeometry(QtCore.QRect(10, 460, 93, 28))
         self.pauseButton.setObjectName("pauseButton")
+        self.pauseButton.setFocusPolicy(Qt.ClickFocus)
         self.exitButton = QtWidgets.QPushButton(self.centralWidget)
         self.exitButton.setGeometry(QtCore.QRect(10, 500, 93, 28))
         self.exitButton.setObjectName("exitButton")
+        self.exitButton.setFocusPolicy(Qt.ClickFocus)
         self.score = QtWidgets.QLabel(self.centralWidget)
         self.score.setGeometry(QtCore.QRect(20, 30, 71, 21))
         font = QtGui.QFont()
@@ -54,7 +58,7 @@ class Ui_MainWindow(object):
         self.frame.setGeometry(QtCore.QRect(119, 9, 251, 521))
         self.frame.setFrameShape(QtWidgets.QFrame.Box)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame.setLineWidth(1)
+        self.frame.setLineWidth(2)
         self.frame.setMidLineWidth(0)
         self.frame.setObjectName("frame")
         MainWindow.setCentralWidget(self.centralWidget)
