@@ -123,7 +123,7 @@ class Ui_MainWindow(object):
         self.scores.setText(_translate("MainWindow", "TextLabel"))
         self.line.setText(_translate("MainWindow", "Complete"))
         self.lines.setText(_translate("MainWindow", "TextLabel"))
-        self.startButton.setText(_translate("MainWindow", "START Button"))
-        self.pauseButton.setText(_translate("MainWindow", "PAUSE Button"))
-        self.exitButton.setText(_translate("MainWindow", "EXIT Button"))
+        self.startButton.setText(_translate("MainWindow", "START"))
+        self.pauseButton.setText(_translate("MainWindow", "PAUSE"))
+        self.exitButton.setText(_translate("MainWindow", "EXIT"))
 
