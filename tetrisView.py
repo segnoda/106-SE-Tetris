@@ -7,7 +7,7 @@ from tetrisModel import *
 #from B10415013 import *
 #from B10415015 import *
 #from B10415051 import *
-from B10431031 import *
+from B10415051 import *
 
 import sys, random
 
@@ -238,7 +238,7 @@ class tetrisGame(QFrame):
     def checkfullboard(self):
         check = 0
         for i in range(tetrisGame.BoardWidth):
-            check += self.shapeAt(i, 20)
+            check += self.shapeAt(i, 22)
         if  check!=0:
             self.gameover = True
             tetrisView.over = True
