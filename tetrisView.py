@@ -222,9 +222,11 @@ class tetrisGame(QFrame):
             x = newX + newPiece.x(i)
 
             y = newY - newPiece.y(i)
-            if x < 0 or x >= tetrisGame.BoardWidth or y < 0 or y >= tetrisGame.BoardHeight + 4:
+            if x < 0 or x >= tetrisGame.BoardWidth or y < 0 or y >= tetrisGame.BoardHeight + 3:
+                self.checkfullboard()
                 return False
             if self.shapeAt(x, y) != PiecesShape.NoShape:
+                self.checkfullboard()
                 return False
         self.currentPiece = newPiece
         self.curX = newX
@@ -257,7 +259,6 @@ class tetrisGame(QFrame):
         return self.contentsRect().height() // tetrisGame.BoardHeight
 
     def paintEvent(self, event):
-        self.checkfullboard()
         painter = QPainter(self)
         
         rect = self.contentsRect()
