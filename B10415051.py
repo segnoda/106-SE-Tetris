@@ -16,7 +16,7 @@ class Ui_MainWindow(object):
                 * {
                     background: #006400;
                     color: #ffffff;
-                    front-size: 14px;
+                    font-size: 14px;
                 }
                 QPushButon {
                     background: #13398b;
@@ -38,7 +38,7 @@ class Ui_MainWindow(object):
                     border: none;
                 }
                 QLabel#scores {
-                    frond-size: 30px;
+                    font-size: 15px;
                 }
                 QLabel#lines {
                     font-size: 15px;
