@@ -7,7 +7,8 @@ from tetrisModel import *
 #from B10415013 import *
 #from B10415015 import *
 #from B10415051 import *
-from B10415051 import *
+#from B10431031 import *
+from B10431031 import *
 
 import sys, random
 
@@ -139,7 +140,7 @@ class tetrisGame(QFrame):
     def newPiece(self):
         self.currentPiece.setRandomShape()
         self.curX = tetrisGame.BoardWidth // 2 + 1
-        self.curY = tetrisGame.BoardHeight - 1 + self.currentPiece.minY()
+        self.curY = tetrisGame.BoardHeight + self.currentPiece.minY()
         if not self.Move(self.currentPiece, self.curX, self.curY):
             self.currentPiece.setShape(PiecesShape.NoShape)
             self.timer.stop()
@@ -223,7 +224,6 @@ class tetrisGame(QFrame):
 
             y = newY - newPiece.y(i)
             if x < 0 or x >= tetrisGame.BoardWidth or y < 0 or y >= tetrisGame.BoardHeight + 3:
-                self.checkfullboard()
                 return False
             if self.shapeAt(x, y) != PiecesShape.NoShape:
                 self.checkfullboard()
@@ -238,7 +238,7 @@ class tetrisGame(QFrame):
     def checkfullboard(self):
         check = 0
         for i in range(tetrisGame.BoardWidth):
-            check += self.shapeAt(i, 22)
+            check += self.shapeAt(i, 21)
         if  check!=0:
             self.gameover = True
             tetrisView.over = True
@@ -263,7 +263,7 @@ class tetrisGame(QFrame):
         
         rect = self.contentsRect()
         boardTop = rect.bottom() - tetrisGame.BoardHeight * self.squareHeight()
-        for i in range(tetrisGame.BoardHeight):
+        for i in range(tetrisGame.BoardHeight+1):
             for j in range(tetrisGame.BoardWidth):
 
                 shape = self.shapeAt(j, tetrisGame.BoardHeight - i - 1)
