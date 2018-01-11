@@ -7,7 +7,7 @@ from tetrisModel import *
 #from B10415013 import *
 #from B10415015 import *
 #from B10415051 import *
-from B10431031 import *
+from B10415051 import *
 
 import sys, random
 
@@ -182,6 +182,7 @@ class tetrisGame(QFrame):
         numFullLines = 0
         rowsToRemove = []
 
+        count = 0
         for i in range(tetrisGame.BoardHeight):
             n = 0
             for j in range(tetrisGame.BoardWidth):
@@ -191,8 +192,13 @@ class tetrisGame(QFrame):
                 rowsToRemove.append(i)
                 self.line += 1
                 self.parent().lines.setText(str(self.line))
-                self.score += 5
-                self.parent().scores.setText(str(self.score))
+                count = count + 1
+        if(count == 4):
+            self.score = self.score + 8
+            self.parent().scores.setText(str(self.score))
+        else:
+            self.score = self.score + count
+            self.parent().scores.setText(str(self.score))
 
 
         rowsToRemove.reverse()
